@@ -15,5 +15,5 @@ db.create_all()
 def before_request():
     if request.mimetype == 'application/json':
         request.body = request.get_json()
-    else:
+    elif request.method == "POST":
         request.body = request.form
