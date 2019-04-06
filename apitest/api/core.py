@@ -44,10 +44,10 @@ def get_using_postgres():
     reqLat = req.args.get('lat')
     reqLong = req.args.get('long')
     dist = req.args.get('dist')
-    result = db.engine.execute("select *  from (select *,(point(latitude, longitude)<@>point({}, {}))*1.609344 as dist from zipcodes) t where dist <= {};".format(reqLat, reqLong, dist))
+    result = db.engine.execute(
+        "select *  from (select *,(point(latitude, longitude)<@>point({}, {}))*1.609344 as dist from {}) t where dist <= {};".format(reqLat, reqLong, config.DB_TABLENAME, dist))
     data = []
     for value in result:
-        print(value)
         tempData = {}
         tempData["key"] = value.key
         tempData["place_name"] = value.place_name
@@ -68,10 +68,9 @@ def get_using_self():
     reqLat = req.args.get('lat')
     reqLong = req.args.get('long')
     dist = req.args.get('dist')
-    result = db.engine.execute("SELECT * FROM (  SELECT *, (((acos(sin(({}*pi()/180)) * sin((latitude*pi()/180))+cos(({}*pi()/180)) * cos((latitude*pi()/180)) * cos((({} - longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344) as distance FROM zipcodes) t WHERE distance <= {};".format(reqLat, reqLat, reqLong, dist))
+    result = db.engine.execute("SELECT * FROM (  SELECT *, (((acos(sin(({}*pi()/180)) * sin((latitude*pi()/180))+cos(({}*pi()/180)) * cos((latitude*pi()/180)) * cos((({} - longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344) as distance FROM {}) t WHERE distance <= {};".format(reqLat, reqLat, reqLong, config.DB_TABLENAME, dist))
     data = []
     for value in result:
-        print(value)
         tempData = {}
         tempData["key"] = value.key
         tempData["place_name"] = value.place_name

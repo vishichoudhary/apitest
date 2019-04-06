@@ -1,8 +1,9 @@
 from apitest import db
+import apitest.config as config
 
 
 class Zip_Codes(db.Model):
-    __tablename__ = 'zipcodes'
+    __tablename__ = config.DB_TABLENAME
     key = db.Column(db.String(10), primary_key=True)
     place_name = db.Column(db.String(200), unique=False, nullable=True)
     admin_name1 = db.Column(db.String(200), unique=False, nullable=True)
