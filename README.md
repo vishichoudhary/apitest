@@ -5,3 +5,9 @@
 
 # Documentation regarding APIs can be found on
 https://documenter.getpostman.com/view/4395119/S1EJY1pB
+
+
+# How to run tests
+
+1) Install pytest
+2) run `` pytest `` 
