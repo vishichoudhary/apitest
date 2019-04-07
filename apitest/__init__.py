@@ -17,3 +17,8 @@ def before_request():
         request.body = request.get_json()
     elif request.method == "POST":
         request.body = request.form
+
+
+@app.route("/", methods=["GET"])
+def who():
+    return "hello world"

@@ -68,7 +68,7 @@ def get_using_self():
     reqLat = req.args.get('lat')
     reqLong = req.args.get('long')
     dist = req.args.get('dist')
-    result = db.engine.execute("SELECT * FROM (  SELECT *, (((acos(sin(({}*pi()/180)) * sin((latitude*pi()/180))+cos(({}*pi()/180)) * cos((latitude*pi()/180)) * cos((({} - longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344) as distance FROM {}) t WHERE distance <= {};".format(reqLat, reqLat, reqLong, config.DB_TABLENAME, dist))
+    result = db.engine.execute("SELECT * FROM (  SELECT *, (((acos(sin(({}*pi()/180)) * sin((latitude*pi()/180))+cos(({} * pi()/180)) * cos((latitude*pi()/180)) * cos((({} - longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344) as distance FROM {}) t WHERE distance <= {};".format(reqLat, reqLat, reqLong, config.DB_TABLENAME, dist))
     data = []
     for value in result:
         tempData = {}
